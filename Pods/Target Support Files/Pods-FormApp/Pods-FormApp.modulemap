@@ -1,0 +1,6 @@
+framework module Pods_FormApp {
+  umbrella header "Pods-FormApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
