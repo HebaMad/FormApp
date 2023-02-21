@@ -17,11 +17,14 @@ protocol AppNetworkable:Networkable  {
     func division(completion: @escaping (Result<BaseResponse<DiviosnData>, Error>)-> ())
     func logout(completion: @escaping (Result<BaseResponse<Empty>, Error>)-> ())
     func getFormItems(form_type_id:String,completion: @escaping (Result<BaseResponse<FormItemData>, Error>)-> ())
+    func submitForms(formsDetails:[String : Any],completion: @escaping (Result<BaseResponse<FormItemData>, Error>)-> ())
     
 }
 
 
 class AppManager: AppNetworkable {
+
+    
  
     typealias targetType = AppTarget
 
@@ -59,10 +62,9 @@ class AppManager: AppNetworkable {
     func getFormItems(form_type_id: String, completion: @escaping (Result<BaseResponse<FormItemData>, Error>) -> ()) {
         request(target:.getFormItems(form_type_id: form_type_id), completion: completion)
     }
-    
- 
-
-
+    func submitForms(formsDetails: [String : Any], completion: @escaping (Result<BaseResponse<FormItemData>, Error>) -> ()) {
+        request(target: .submitForms(formsDetails: formsDetails), completion: completion)
+    }
 
 
     
