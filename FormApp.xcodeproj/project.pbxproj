@@ -51,6 +51,7 @@
 		27CC17A329A4058B007BADC0 /* BottomBorderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC179D29A4058B007BADC0 /* BottomBorderTextField.swift */; };
 		27CC17A429A4058B007BADC0 /* UIButtonDesignable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC179E29A4058B007BADC0 /* UIButtonDesignable.swift */; };
 		27CC17A529A4058B007BADC0 /* UIImageViewDesignable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC179F29A4058B007BADC0 /* UIImageViewDesignable.swift */; };
+		27CC17A729A555BB007BADC0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC17A629A555BB007BADC0 /* Extensions.swift */; };
 		56AA3C580E025EE1A3ACEF96 /* Pods_FormApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF08162BB8D1E1AEC258DA07 /* Pods_FormApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +102,7 @@
 		27CC179D29A4058B007BADC0 /* BottomBorderTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBorderTextField.swift; sourceTree = "<group>"; };
 		27CC179E29A4058B007BADC0 /* UIButtonDesignable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonDesignable.swift; sourceTree = "<group>"; };
 		27CC179F29A4058B007BADC0 /* UIImageViewDesignable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewDesignable.swift; sourceTree = "<group>"; };
+		27CC17A629A555BB007BADC0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		51DECD008AA1B38BD035E23F /* Pods-FormApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormApp.release.xcconfig"; path = "Target Support Files/Pods-FormApp/Pods-FormApp.release.xcconfig"; sourceTree = "<group>"; };
 		B611ED640CC1459035AF997F /* Pods-FormApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormApp.debug.xcconfig"; path = "Target Support Files/Pods-FormApp/Pods-FormApp.debug.xcconfig"; sourceTree = "<group>"; };
 		FF08162BB8D1E1AEC258DA07 /* Pods_FormApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FormApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +178,7 @@
 				277CABF129815062009C11CB /* UIViewFromNIB.swift */,
 				277CABE129814A42009C11CB /* UITextFieldDataPicker.swift */,
 				279404CE29A0BC9A00742AD9 /* AppConfig.swift */,
+				27CC17A629A555BB007BADC0 /* Extensions.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				27CC17A429A4058B007BADC0 /* UIButtonDesignable.swift in Sources */,
 				279404CC29A0BC3F00742AD9 /* AppNetworkable.swift in Sources */,
 				279404DA29A0C86400742AD9 /* Networkable.swift in Sources */,
+				27CC17A729A555BB007BADC0 /* Extensions.swift in Sources */,
 				279404F529A2BA1700742AD9 /* CDAlertViewType.swift in Sources */,
 				277CABCF29813969009C11CB /* SceneDelegate.swift in Sources */,
 				279404D529A0BCEF00742AD9 /* KeychainOperations.swift in Sources */,
@@ -516,7 +520,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -570,7 +574,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -586,9 +590,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 496U3V6VDL;
+				DEVELOPMENT_TEAM = XM9YMQACH6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FormApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -602,8 +607,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ios.com.FormApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ios.app.formApps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -619,9 +625,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 496U3V6VDL;
+				DEVELOPMENT_TEAM = XM9YMQACH6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FormApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -635,8 +642,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ios.com.FormApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ios.app.formApps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

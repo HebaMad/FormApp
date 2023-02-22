@@ -49,7 +49,8 @@ extension HomeVC{
         case qcFormBtn:
             let vc = QCFormVC.instantiate()
             navigationController?.pushViewController(vc, animated: true)
-        case emailSupportBtn:print("")
+        case emailSupportBtn:
+            self.sendEmail(email: "hebaaisaa2000@gmail.com")
         default:
             print("")
         }

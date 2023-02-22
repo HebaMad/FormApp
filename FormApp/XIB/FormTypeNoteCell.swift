@@ -9,18 +9,18 @@ import UIKit
 
 class FormTypeNoteCell: UITableViewCell,NibLoadableView {
     
+    @IBOutlet weak var addBtn: UIButtonDesignable!
     @IBOutlet weak var FormTypeSubtitle: UILabel!
     
     @IBOutlet weak var formTypeStatus: UITextFieldDataPicker!
     @IBOutlet weak var formTitleNote: UITextField!
     
-    var status:[String] = ["Pass","fail"]
+    var status:[String] = ["pass","fail"]
     
     override func awakeFromNib() {
         super.awakeFromNib()
         formTypeStatus.pickerDelegate=self
         formTypeStatus.dataSource=self
-        // Initialization code
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -28,6 +28,13 @@ class FormTypeNoteCell: UITableViewCell,NibLoadableView {
         
         // Configure the view for the selected state
     }
+    override func prepareForReuse() {
+           // invoke superclass implementation
+           super.prepareForReuse()
+           
+    
+
+       }
     
     func  configureCell(obj:DataDetails){
         FormTypeSubtitle.text = obj.title

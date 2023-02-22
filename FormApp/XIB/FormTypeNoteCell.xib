@@ -29,7 +29,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="RBt-tF-Eqc"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -100,6 +100,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="FormTypeSubtitle" destination="rKP-jS-f4I" id="2YF-MA-nbU"/>
+                <outlet property="addBtn" destination="t0L-iN-urC" id="Hvu-AA-dZQ"/>
                 <outlet property="formTitleNote" destination="RW5-ye-Ycl" id="5jA-H8-9PC"/>
                 <outlet property="formTypeStatus" destination="2L0-7v-gOh" id="PHk-Dg-xQd"/>
             </connections>
@@ -108,7 +109,10 @@
     </objects>
     <designables>
         <designable name="2L0-7v-gOh">
-            <size key="intrinsicContentSize" width="102.33333333333333" height="34"/>
+            <size key="intrinsicContentSize" width="58.333333333333336" height="34"/>
+        </designable>
+        <designable name="t0L-iN-urC">
+            <size key="intrinsicContentSize" width="30" height="30"/>
         </designable>
     </designables>
     <resources>
