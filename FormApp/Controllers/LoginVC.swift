@@ -88,7 +88,11 @@ extension LoginVC {
 
 extension LoginVC:FormDelegate {
     
-    func showAlerts(title: String, message: String) {}
+    func showAlerts(title: String, message: String) {
+        Alert.showErrorAlert(message:message)
+                                
+                                
+      }
     
     func getUserData(user: User) {
         do{

@@ -8,6 +8,7 @@
 import Foundation
 
 struct User:Decodable{
+    
     let fname:String?
     let lname:String?
     let email:String?

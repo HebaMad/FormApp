@@ -77,7 +77,7 @@ struct RequiredFieldValidator: ValidatorConvertible {
     
     func validated(_ value: String) throws -> String {
         guard !value.isEmpty else {
-            throw ValidationError("Required field " + fieldName)
+            throw ValidationError(fieldName)
         }
         return value
     }

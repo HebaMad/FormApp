@@ -77,14 +77,19 @@ extension QCFormVC{
         print(sender.tag)
         let indexPath = NSIndexPath(row: sender.tag, section: 0)
         let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
+        if cell.formTitleNote.text != "" && cell.formTypeStatus.text != ""{
         ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
         ItemNotes.append(cell.formTitleNote.text ?? "")
         Itemstatus.append(cell.formTypeStatus.text ?? "")
         itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
         itemNote[sender.tag] = cell.formTitleNote.text ?? ""
-        cell.addBtn.isEnabled = false
-        cell.addBtn.alpha = 0.5
-        cell.addBtn.setTitle("Added", for: .disabled)
+        
+       
+            cell.addBtn.isEnabled = false
+            cell.addBtn.alpha = 0.5
+            cell.addBtn.setTitle("Added", for: .disabled)
+        }
+     
         
     }
 }
@@ -97,15 +102,20 @@ extension QCFormVC{
         case submitBtn:
             do{
                 
-                let divisionleader = try diviosnLeaderData.validatedText(validationType: .requiredField(field: "Goal title required"))
-                let formType = try formTypeData.validatedText(validationType: .requiredField(field: "deadline requied"))
-                let job = try jobData.validatedText(validationType: .requiredField(field: "deadline requied"))
-                let companies = try companiesData.validatedText(validationType: .requiredField(field: "deadline requied"))
-                print(Itemstatus)
-                print(ItemID)
-                print(ItemNotes)
-                
-                ItemNotes.count != 0 ? submitForm(formsDetails: FormDetailsParameter(itemNotes: ItemNotes, itemIDs: ItemID, itemStatus: Itemstatus)) : Alert.showErrorAlert(message:  "Add your form Item Data" )
+                let divisionleader = try diviosnLeaderData.validatedText(validationType: .requiredField(field: " Select Division leader please"))
+                let formType = try formTypeData.validatedText(validationType: .requiredField(field: "Select form type please"))
+                let job = try jobData.validatedText(validationType: .requiredField(field: "Select job please"))
+                let companies = try companiesData.validatedText(validationType: .requiredField(field: "Select company please"))
+           
+                Alert.showAlert(viewController: self, title: "Do you  want to send the form", message: "") { Value in
+                    if Value == true{
+                        self.ItemNotes.count != 0 ? self.submitForm(formsDetails: self.FormDetailsParameter(itemNotes: self.ItemNotes, itemIDs: self.ItemID, itemStatus: self.Itemstatus)) : Alert.showErrorAlert(message:  "Add your form Item Data" )
+                    }
+                    
+                   
+                    
+                }
+              
                 
             }catch{
                 Alert.showErrorAlert(message: (error as! ValidationError).message)

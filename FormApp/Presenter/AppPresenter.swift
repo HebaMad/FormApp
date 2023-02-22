@@ -52,6 +52,7 @@ class AppPresenter:NSObject{
                     self.delegate?.getUserData(user: response.data!)
 
                 }else{
+                    
                     self.delegate?.showAlerts(title:"Failure", message: response.message ?? "")
                 }
             case  .failure(_):

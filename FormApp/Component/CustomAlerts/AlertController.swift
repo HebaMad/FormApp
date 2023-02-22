@@ -64,10 +64,12 @@ public final class AlertBuilder {
     public func show() -> UIAlertController {
         let alert = UIAlertController(title: alertProperties.title, message: alertProperties.message, preferredStyle: alertProperties.preferredStyle)
         let successAction = UIAlertAction(title: alertActionSuccessProperties.title, style: alertActionSuccessProperties.alertActionStyle, handler: onSuccess)
-        successAction.setValue(UIColor.red, forKey: "titleTextColor")
+//        successAction.setValue(UIColor.red, forKey: "titleTextColor")
         alert.addAction(successAction)
         
         let cancelAction = UIAlertAction(title: alertActionCancelProperties.title, style: alertActionCancelProperties.alertActionStyle, handler: onCancel)
+        cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
+
         alert.addAction(cancelAction)
 
         viewController.present(alert, animated: true, completion: nil)
@@ -80,7 +82,7 @@ public final class AlertBuilder {
 
 public enum Alert {
 
-    public static func showAlert(viewController: UIViewController, title: String = "MIRA", message: String, completion: @escaping (_ success: Bool) -> Void) {
+    public static func showAlert(viewController: UIViewController, title: String , message: String, completion: @escaping (_ success: Bool) -> Void) {
         AlertBuilder(viewController: viewController)
             .preferredStyle(.alert)
             .withTitle(title)

@@ -8,7 +8,9 @@
 import Foundation
 import MessageUI
 extension UIViewController{
-    
+    var sceneDelegate:SceneDelegate{
+        return (self.view.window?.windowScene?.delegate)! as! SceneDelegate
+    }
     func sendEmail(email:String){
         let composeViewController = MFMailComposeViewController()
 

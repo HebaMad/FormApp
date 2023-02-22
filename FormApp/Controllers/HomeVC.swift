@@ -13,9 +13,10 @@ class HomeVC: UIViewController {
     @IBOutlet weak var qcFormBtn: UIButton!
     @IBOutlet weak var emailSupportBtn: UIButton!
     
+    @IBOutlet weak var logoutBtn: UIButton!
     //MARK: - Properties
 
-    
+    let presenter = AppPresenter()
     //MARK: - Life cycle
 
     
@@ -33,6 +34,7 @@ extension HomeVC{
     func BindButtons(){
         qcFormBtn.addTarget(self, action: #selector(ButtonWasTapped), for: .touchUpInside)
         emailSupportBtn.addTarget(self, action: #selector(ButtonWasTapped), for: .touchUpInside)
+        logoutBtn.addTarget(self, action: #selector(ButtonWasTapped), for: .touchUpInside)
     }
 }
 
@@ -50,7 +52,19 @@ extension HomeVC{
             let vc = QCFormVC.instantiate()
             navigationController?.pushViewController(vc, animated: true)
         case emailSupportBtn:
-            self.sendEmail(email: "hebaaisaa2000@gmail.com")
+            self.sendEmail(email: "blowe@cpnhinc.com")
+            
+        case logoutBtn:
+            do{
+//                try KeychainWrapper.set(value:"" , key: self.userProfile?.mobile ?? "")
+//                AppData.mobile = self.userProfile?.mobile ?? ""
+                self.presenter.logout()
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavigationController")
+                self.sceneDelegate.setRootVC(vc: vc)
+
+              } catch let error {
+                print(error)
+          }
         default:
             print("")
         }
