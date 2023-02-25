@@ -17,6 +17,7 @@ class HomeVC: UIViewController {
     //MARK: - Properties
 
     let presenter = AppPresenter()
+    var email = ""
     //MARK: - Life cycle
 
     
@@ -56,8 +57,8 @@ extension HomeVC{
             
         case logoutBtn:
             do{
-//                try KeychainWrapper.set(value:"" , key: self.userProfile?.mobile ?? "")
-//                AppData.mobile = self.userProfile?.mobile ?? ""
+                try KeychainWrapper.set(value:"" , key: self.email )
+                AppData.email = self.email
                 self.presenter.logout()
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavigationController")
                 self.sceneDelegate.setRootVC(vc: vc)

@@ -77,7 +77,7 @@ extension QCFormVC{
         print(sender.tag)
         let indexPath = NSIndexPath(row: sender.tag, section: 0)
         let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
-        if cell.formTitleNote.text != "" && cell.formTypeStatus.text != ""{
+        if cell.formTitleNote.text != "" || cell.formTypeStatus.text != ""{
         ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
         ItemNotes.append(cell.formTitleNote.text ?? "")
         Itemstatus.append(cell.formTypeStatus.text ?? "")
@@ -246,7 +246,14 @@ extension QCFormVC:UITextFieldDataPickerDelegate,UITextFieldDataPickerDataSource
 extension QCFormVC:FormDelegate{
     func showAlerts(title: String, message: String) {
         Alert.showSuccessAlert(message: message)
-        
+        formsItem=[]
+        formTypeNoteTableview.reloadData()
+        companiesData.text=""
+        jobData.text=""
+        diviosnLeaderData.text=""
+        formTypeData.text=""
+
+
     }
     
     func getUserData(user: User) {}

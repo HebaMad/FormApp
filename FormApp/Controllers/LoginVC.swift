@@ -99,6 +99,7 @@ extension LoginVC:FormDelegate {
             try KeychainWrapper.set(value: "Bearer"+" "+user.api_token! , key: user.email ?? "")
             AppData.email = user.email ?? ""
             let vc=HomeVC.instantiate()
+            vc.email = user.email ?? ""
             navigationController?.pushViewController(vc, animated: true)
             
         } catch let error {

@@ -21,12 +21,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let _delegate = UIApplication.shared.delegate as? AppDelegate {
             _delegate.window = window
         }
+        saveLogin()
     }
     func setRootVC(vc:UIViewController){
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
         
         }
+    
+    
+       func saveLogin(){
+           
+           do {
+               
+               let token = try KeychainWrapper.get(key: AppData.email) ?? ""
+               print(token)
+               if token == ""{
+                   let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavigationController")
+                   self.setRootVC(vc: vc)
+               } else {
+                   let vc=HomeVC.instantiate()
+                   setRootVC(vc: vc)
+               }
+               
+           }
+           catch{
+               
+               let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavigationController")
+               self.setRootVC(vc: vc)
+           }
+       }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
