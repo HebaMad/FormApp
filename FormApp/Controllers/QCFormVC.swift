@@ -87,7 +87,7 @@ extension QCFormVC{
        
             cell.addBtn.isEnabled = false
             cell.addBtn.alpha = 0.5
-            cell.addBtn.setTitle("Added", for: .disabled)
+            cell.addBtn.setTitle("Added", for: .normal)
         }
      
         
@@ -155,12 +155,16 @@ extension QCFormVC:UITableViewDelegate, UITableViewDataSource{
         if itemStatus.keys.contains(indexPath.row){
             cell.formTitleNote.text = itemNote[indexPath.row]
             cell.formTypeStatus.text = itemStatus[indexPath.row]
-            cell.addBtn.setTitle("Added", for: .disabled)
+            cell.addBtn.setTitle("Added", for: .normal)
+            cell.addBtn.isEnabled = false
+
             cell.addBtn.alpha = 0.5
         }else{
             cell.formTitleNote.text = ""
             cell.formTypeStatus.text = ""
-            cell.addBtn.setTitle("Add", for: .disabled)
+            cell.addBtn.setTitle("Add", for: .normal)
+            cell.addBtn.isEnabled = true
+
             cell.addBtn.alpha = 1
         }
         

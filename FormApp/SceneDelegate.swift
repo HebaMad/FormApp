@@ -40,8 +40,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavigationController")
                    self.setRootVC(vc: vc)
                } else {
-                   let vc=HomeVC.instantiate()
-                   setRootVC(vc: vc)
+                   let nav1 = UINavigationController()
+                   let mainView = HomeVC.instantiate()
+                   nav1.viewControllers = [mainView]
+                   nav1.navigationBar.isHidden = true
+                   setRootVC(vc: nav1)
+                
                }
                
            }
