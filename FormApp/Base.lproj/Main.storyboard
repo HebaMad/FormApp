@@ -511,8 +511,8 @@
                                             <constraint firstAttribute="height" constant="50" id="78H-na-H65"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="QC Form">
-                                            <fontDescription key="titleFontDescription" name="MuktaMahee-Bold" family="Mukta Mahee" pointSize="18"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Forms">
+                                            <fontDescription key="titleFontDescription" name="MuktaMahee-Bold" family="Mukta Mahee" pointSize="20"/>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <userDefinedRuntimeAttributes>
@@ -960,19 +960,19 @@
     </scenes>
     <designables>
         <designable name="0fM-b2-QOL">
-            <size key="intrinsicContentSize" width="62" height="18.666666666666668"/>
+            <size key="intrinsicContentSize" width="4" height="18.666666666666668"/>
         </designable>
         <designable name="KSo-kX-1ea">
-            <size key="intrinsicContentSize" width="62" height="18.666666666666668"/>
+            <size key="intrinsicContentSize" width="4" height="18.666666666666668"/>
         </designable>
         <designable name="Z8E-kc-zSk">
-            <size key="intrinsicContentSize" width="62" height="18.666666666666668"/>
+            <size key="intrinsicContentSize" width="4" height="18.666666666666668"/>
         </designable>
         <designable name="gtd-rG-4pT">
             <size key="intrinsicContentSize" width="92.666666666666671" height="37.333333333333336"/>
         </designable>
         <designable name="ko8-h7-3NR">
-            <size key="intrinsicContentSize" width="62" height="18.666666666666668"/>
+            <size key="intrinsicContentSize" width="4" height="18.666666666666668"/>
         </designable>
         <designable name="o5i-CD-iUM">
             <size key="intrinsicContentSize" width="73.666666666666671" height="37.333333333333336"/>
