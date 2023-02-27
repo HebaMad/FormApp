@@ -26,6 +26,7 @@ final public class UITextFieldDataPicker: UITextField,UIPickerViewDataSource,UIP
             addToolbar()
         }
     }
+    
     @IBInspectable var hideInputViewOnSelect:Bool = false
     
     

@@ -50,10 +50,16 @@ class QCFormVC: UIViewController {
         super.viewDidLoad()
         BindButtons()
         jobData.isEnabled=false
+        companiesData.isEnabled=false
         presenter.getCompanies()
+        presenter.delegate=self
+
         presenter.getDivision()
+        presenter.delegate=self
+
         presenter.getForms()
         presenter.delegate=self
+
         setupTableview()
     }
     
@@ -61,6 +67,22 @@ class QCFormVC: UIViewController {
         formTypeNoteTableview.register(FormTypeNoteCell.self)
         formTypeNoteTableview.delegate=self
         formTypeNoteTableview.dataSource = self
+        
+        diviosnLeaderData.pickerDelegate=self
+        diviosnLeaderData.dataSource=self
+        
+        formTypeData.pickerDelegate=self
+        formTypeData.dataSource=self
+        
+        diviosnLeaderData.pickerDelegate=self
+        diviosnLeaderData.dataSource=self
+        
+        jobData.pickerDelegate=self
+        jobData.dataSource=self
+
+
+        
+      
     }
     
 }
@@ -217,27 +239,39 @@ extension QCFormVC:UITextFieldDataPickerDelegate,UITextFieldDataPickerDataSource
     func textFieldDataPicker(_ textField: UITextFieldDataPicker, didSelectRow row: Int, inComponent component: Int) {
         switch textField{
         case companiesData:
-            companiesData.setTextFieldTitle(title: companies[row].title ?? "")
-            companyID = companies[row].id ?? 0
-            jobData.isEnabled=true
-            presenter.getJobs(companyID: "\(companyID)")
-            presenter.delegate=self
-            jobData.dataSource=self
+            if companies.count != 0 {
+                companiesData.setTextFieldTitle(title: companies[row].title ?? "")
+                companyID = companies[row].id ?? 0
+                jobData.isEnabled=true
+                jobs = []
+                jobData.text=""
+                presenter.getJobs(companyID: "\(companyID)")
+                presenter.delegate=self
+            }
+           
             
         case jobData :
-            jobData.setTextFieldTitle(title: jobs[row].title ?? "")
-            jobID = jobs[row].id ?? 0
+            if jobs.count != 0 {
+                jobData.setTextFieldTitle(title: jobs[row].title ?? "")
+                jobID = jobs[row].id ?? 0
+            }
+           
             
         case diviosnLeaderData :
-            diviosnLeaderData.setTextFieldTitle(title: division[row].title ?? "")
-            divisionID = division[row].id ?? 0
+            if division.count != 0 {
+                diviosnLeaderData.setTextFieldTitle(title: division[row].title ?? "")
+                divisionID = division[row].id ?? 0
+            }
+            
             
         case formTypeData:
-            
-            formTypeData.setTextFieldTitle(title: forms[row].title ?? "")
-            formTypeID = forms[row].id ?? 0
-            presenter.getFormItem(formTypeID:"\(formTypeID)" )
-            presenter.delegate=self
+            if forms.count != 0{
+                formTypeData.setTextFieldTitle(title: forms[row].title ?? "")
+                formTypeID = forms[row].id ?? 0
+                presenter.getFormItem(formTypeID:"\(formTypeID)" )
+                presenter.delegate=self
+            }
+           
             
         default:
             print("")
@@ -264,6 +298,7 @@ extension QCFormVC:FormDelegate{
     
     func getCompanyData(data: CompaniesData) {
         companies=data.companies
+        companiesData.isEnabled=true
         companiesData.pickerDelegate=self
         companiesData.dataSource=self
     }
@@ -271,7 +306,8 @@ extension QCFormVC:FormDelegate{
     func getJobData(data: JobData) {
         jobs=data.jobs
         jobData.pickerDelegate=self
-        
+        jobData.dataSource=self
+
         
     }
     
