@@ -79,8 +79,8 @@ class AppPresenter:NSObject{
         }
     }
     
-    func getJobs(companyID:String){
-        AppManager.shared.getJob(companyId:companyID ) { Response in
+    func getJobs(companyID:String,search:String){
+        AppManager.shared.getJob(companyId:companyID,search:search ) { Response in
                 
                 switch Response{
                     

@@ -13,13 +13,12 @@ enum AppTarget:TargetType{
     case SignUp(fname:String,lname:String,email:String,password:String)
     case login(email:String,password:String)
     case getCompanies
-    case getJob(companyId:String)
+    case getJob(companyId:String,search:String)
     case forms
     case divisions
     case getFormItems(form_type_id:String)
     case logout
     case submitForms(formsDetails:[String : Any])
-    
     
     
     var baseURL: URL {
@@ -91,8 +90,8 @@ enum AppTarget:TargetType{
             return ["fname":fname,"lname":lname,"email":email,"password":password]
         case .login(let email,let password):
             return ["email":email,"password":password]
-        case .getJob(let companyId):
-            return ["company_id":companyId]
+        case .getJob(let companyId,let search):
+            return ["company_id":companyId,"search":search]
         case .getFormItems(let form_type_id):
             return ["form_type_id":form_type_id]
         case .submitForms(let formsDetails):

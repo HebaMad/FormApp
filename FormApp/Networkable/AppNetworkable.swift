@@ -12,7 +12,7 @@ protocol AppNetworkable:Networkable  {
     func signUpUser(fname:String,lname:String,email:String,password:String,completion: @escaping (Result<BaseResponse<User>, Error>)-> ())
     func login(email:String,password:String,completion: @escaping (Result<BaseResponse<User>, Error>)-> ())
     func getCompanies(completion: @escaping (Result<BaseResponse<CompaniesData>, Error>)-> ())
-    func getJob(companyId:String,completion: @escaping (Result<BaseResponse<JobData>, Error>)-> ())
+    func getJob(companyId:String,search:String,completion: @escaping (Result<BaseResponse<JobData>, Error>)-> ())
     func forms(completion: @escaping (Result<BaseResponse<FormsData>, Error>)-> ())
     func division(completion: @escaping (Result<BaseResponse<DiviosnData>, Error>)-> ())
     func logout(completion: @escaping (Result<BaseResponse<Empty>, Error>)-> ())
@@ -44,8 +44,8 @@ class AppManager: AppNetworkable {
     func getCompanies(completion: @escaping (Result<BaseResponse<CompaniesData>, Error>) -> ()) {
         request(target: .getCompanies, completion: completion)
     }
-    func getJob(companyId: String, completion: @escaping (Result<BaseResponse<JobData>, Error>) -> ()) {
-        request(target: .getJob(companyId: companyId), completion: completion)
+    func getJob(companyId: String,search:String, completion: @escaping (Result<BaseResponse<JobData>, Error>) -> ()) {
+        request(target: .getJob(companyId: companyId,search:search), completion: completion)
     }
     func forms(completion: @escaping (Result<BaseResponse<FormsData>, Error>) -> ()) {
         request(target: .forms, completion: completion)
