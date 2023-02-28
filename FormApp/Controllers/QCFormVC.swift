@@ -12,11 +12,22 @@ class QCFormVC: UIViewController {
     
     @IBOutlet weak var formTypeNoteTableview: UITableView!
     
-    @IBOutlet weak var diviosnLeaderData: UITextFieldDataPicker!
-    @IBOutlet weak var formTypeData: UITextFieldDataPicker!
-    @IBOutlet weak var jobData: UITextFieldDataPicker!
-    @IBOutlet weak var companiesData: UITextFieldDataPicker!
+    @IBOutlet weak var jobView: UIViewDesignable!
+    //    @IBOutlet weak var diviosnLeaderData: UITextFieldDataPicker!
+//    @IBOutlet weak var formTypeData: UITextFieldDataPicker!
+//    @IBOutlet weak var jobData: UITextFieldDataPicker!
+//    @IBOutlet weak var companiesData: UITextFieldDataPicker!
+    @IBOutlet weak var companyBtn: UIButton!
     
+    @IBOutlet weak var formTypeBtn: UIButton!
+    @IBOutlet weak var divisionBtn: UIButton!
+    @IBOutlet weak var jobBtn: UIButton!
+    
+    @IBOutlet weak var diviosnLeaderData: UITextField!
+    @IBOutlet weak var formTypeData: UITextField!
+    @IBOutlet weak var jobData: UITextField!
+    @IBOutlet weak var companiesData: UITextField!
+
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var submitBtn: UIButton!
     
@@ -49,8 +60,8 @@ class QCFormVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         BindButtons()
-        jobData.isEnabled=false
-        companiesData.isEnabled=false
+        BtnStatus()
+        
         presenter.getCompanies()
         presenter.delegate=self
 
@@ -63,27 +74,127 @@ class QCFormVC: UIViewController {
         setupTableview()
     }
     
+    func BtnStatus(){
+        formTypeBtn.isEnabled=false
+        companyBtn.isEnabled=false
+        jobBtn.isEnabled=false
+        divisionBtn.isEnabled=false
+        
+        jobView.backgroundColor = .systemGray5
+        
+        diviosnLeaderData.isEnabled=false
+        jobData.isEnabled=false
+        companiesData.isEnabled=false
+        formTypeData.isEnabled=false
+
+    }
+    
     func setupTableview(){
         formTypeNoteTableview.register(FormTypeNoteCell.self)
         formTypeNoteTableview.delegate=self
         formTypeNoteTableview.dataSource = self
         
-        diviosnLeaderData.pickerDelegate=self
-        diviosnLeaderData.dataSource=self
-        
-        formTypeData.pickerDelegate=self
-        formTypeData.dataSource=self
-        
-        diviosnLeaderData.pickerDelegate=self
-        diviosnLeaderData.dataSource=self
-        
-        jobData.pickerDelegate=self
-        jobData.dataSource=self
-
-
-        
-      
+//        diviosnLeaderData.pickerDelegate=self
+//        diviosnLeaderData.dataSource=self
+//
+//        formTypeData.pickerDelegate=self
+//        formTypeData.dataSource=self
+//
+//        diviosnLeaderData.pickerDelegate=self
+//        diviosnLeaderData.dataSource=self
+//
+//        jobData.pickerDelegate=self
+//        jobData.dataSource=self
+   
     }
+    
+    
+    @IBAction func companyAction(_ sender: Any) {
+        let vc = PickerVC.instantiate()
+        vc.arr_data = companies
+        vc.searchBarHiddenStatus = true
+
+        vc.isModalInPresentation = true
+        vc.modalPresentationStyle = .overFullScreen
+        vc.definesPresentationContext = true
+        vc.delegate = {name , index in
+                // Selection Action Here
+            print("Selected Value:",name)
+            print("Selected Index:",index)
+            self.companiesData.text = name
+            self.companyID = index
+      
+            self.jobBtn.isEnabled=true
+            self.jobView.backgroundColor = .white
+            
+            self.jobs = []
+            self.jobData.text=""
+            self.presenter.getJobs(companyID: "\(self.companyID)", search: "")
+            self.presenter.delegate=self
+        }
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func jobAction(_ sender: Any) {
+        let vc = PickerVC.instantiate()
+        vc.arr_data = jobs
+        vc.companyId = self.companyID
+        vc.searchBarHiddenStatus = false
+        vc.isModalInPresentation = true
+        vc.modalPresentationStyle = .overFullScreen
+        vc.definesPresentationContext = true
+        vc.delegate = {name , index in
+                // Selection Action Here
+            print("Selected Value:",name)
+            print("Selected Index:",index)
+            self.jobData.text = name
+            self.jobID = index
+      
+     
+        }
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func divisionLeaderAction(_ sender: Any) {
+        let vc = PickerVC.instantiate()
+        vc.arr_data = division
+        vc.searchBarHiddenStatus = true
+        vc.isModalInPresentation = true
+        vc.modalPresentationStyle = .overFullScreen
+        vc.definesPresentationContext = true
+        vc.delegate = {name , index in
+                // Selection Action Here
+            print("Selected Value:",name)
+            print("Selected Index:",index)
+            self.diviosnLeaderData.text = name
+            self.divisionID = index
+      
+     
+        }
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func FormTypeAction(_ sender: Any) {
+        let vc = PickerVC.instantiate()
+        vc.arr_data = forms
+        vc.searchBarHiddenStatus = true
+        vc.isModalInPresentation = true
+        vc.modalPresentationStyle = .overFullScreen
+        vc.definesPresentationContext = true
+        vc.delegate = {name , index in
+                // Selection Action Here
+            print("Selected Value:",name)
+            print("Selected Index:",index)
+            self.formTypeData.text = name
+            self.formTypeID = index
+            self.presenter.getFormItem(formTypeID:"\(self.formTypeID)" )
+            self.presenter.delegate=self
+     
+        }
+        self.present(vc, animated: true, completion: nil)
+     
+    }
+    
     
 }
 extension QCFormVC{
@@ -203,83 +314,83 @@ extension QCFormVC:UITableViewDelegate, UITableViewDataSource{
     
     
 }
-extension QCFormVC:UITextFieldDataPickerDelegate,UITextFieldDataPickerDataSource{
-    
-    
-    func textFieldDataPicker(_ textField: UITextFieldDataPicker, numberOfRowsInComponent component: Int) -> Int {
-        switch textField{
-        case companiesData:return companies.count
-        case jobData :return jobs.count
-        case diviosnLeaderData :return division.count
-        case formTypeData:return forms.count
-            
-        default:
-            return 0
-        }
-        
-    }
-    
-    func textFieldDataPicker(_ textField: UITextFieldDataPicker, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        switch textField{
-        case companiesData:return companies[row].title ?? ""
-        case jobData :return jobs[row].title ?? ""
-        case diviosnLeaderData :return division[row].title ?? ""
-        case formTypeData:return forms[row].title ?? ""
-            
-        default:
-            return ""
-        }
-    }
-    
-    func numberOfComponents(in textField: UITextFieldDataPicker) -> Int {
-        1
-    }
-    
-    func textFieldDataPicker(_ textField: UITextFieldDataPicker, didSelectRow row: Int, inComponent component: Int) {
-        switch textField{
-        case companiesData:
-            if companies.count != 0 {
-                companiesData.setTextFieldTitle(title: companies[row].title ?? "")
-                companyID = companies[row].id ?? 0
-                jobData.isEnabled=true
-                jobs = []
-                jobData.text=""
-                presenter.getJobs(companyID: "\(companyID)")
-                presenter.delegate=self
-            }
-           
-            
-        case jobData :
-            if jobs.count != 0 {
-                jobData.setTextFieldTitle(title: jobs[row].title ?? "")
-                jobID = jobs[row].id ?? 0
-            }
-           
-            
-        case diviosnLeaderData :
-            if division.count != 0 {
-                diviosnLeaderData.setTextFieldTitle(title: division[row].title ?? "")
-                divisionID = division[row].id ?? 0
-            }
-            
-            
-        case formTypeData:
-            if forms.count != 0{
-                formTypeData.setTextFieldTitle(title: forms[row].title ?? "")
-                formTypeID = forms[row].id ?? 0
-                presenter.getFormItem(formTypeID:"\(formTypeID)" )
-                presenter.delegate=self
-            }
-           
-            
-        default:
-            print("")
-        }
-    }
-    
-    
-}
+//extension QCFormVC:UITextFieldDataPickerDelegate,UITextFieldDataPickerDataSource{
+//
+//
+//    func textFieldDataPicker(_ textField: UITextFieldDataPicker, numberOfRowsInComponent component: Int) -> Int {
+//        switch textField{
+//        case companiesData:return companies.count
+//        case jobData :return jobs.count
+//        case diviosnLeaderData :return division.count
+//        case formTypeData:return forms.count
+//
+//        default:
+//            return 0
+//        }
+//
+//    }
+//
+//    func textFieldDataPicker(_ textField: UITextFieldDataPicker, titleForRow row: Int, forComponent component: Int) -> String? {
+//
+//        switch textField{
+//        case companiesData:return companies[row].title ?? ""
+//        case jobData :return jobs[row].title ?? ""
+//        case diviosnLeaderData :return division[row].title ?? ""
+//        case formTypeData:return forms[row].title ?? ""
+//
+//        default:
+//            return ""
+//        }
+//    }
+//
+//    func numberOfComponents(in textField: UITextFieldDataPicker) -> Int {
+//        1
+//    }
+//
+//    func textFieldDataPicker(_ textField: UITextFieldDataPicker, didSelectRow row: Int, inComponent component: Int) {
+//        switch textField{
+//        case companiesData:
+//            if companies.count != 0 {
+//                companiesData.setTextFieldTitle(title: companies[row].title ?? "")
+//                companyID = companies[row].id ?? 0
+//                jobData.isEnabled=true
+//                jobs = []
+//                jobData.text=""
+//                presenter.getJobs(companyID: "\(companyID)", search: "")
+//                presenter.delegate=self
+//            }
+//
+//
+//        case jobData :
+//            if jobs.count != 0 {
+//                jobData.setTextFieldTitle(title: jobs[row].title ?? "")
+//                jobID = jobs[row].id ?? 0
+//            }
+//
+//
+//        case diviosnLeaderData :
+//            if division.count != 0 {
+//                diviosnLeaderData.setTextFieldTitle(title: division[row].title ?? "")
+//                divisionID = division[row].id ?? 0
+//            }
+//
+//
+//        case formTypeData:
+//            if forms.count != 0{
+//                formTypeData.setTextFieldTitle(title: forms[row].title ?? "")
+//                formTypeID = forms[row].id ?? 0
+//                presenter.getFormItem(formTypeID:"\(formTypeID)" )
+//                presenter.delegate=self
+//            }
+//
+//
+//        default:
+//            print("")
+//        }
+//    }
+//
+//
+//}
 
 extension QCFormVC:FormDelegate{
     func showAlerts(title: String, message: String) {
@@ -290,6 +401,9 @@ extension QCFormVC:FormDelegate{
         jobData.text=""
         diviosnLeaderData.text=""
         formTypeData.text=""
+        jobBtn.isEnabled=false
+         jobView.backgroundColor = .systemGray5
+
 
 
     }
@@ -298,30 +412,35 @@ extension QCFormVC:FormDelegate{
     
     func getCompanyData(data: CompaniesData) {
         companies=data.companies
-        companiesData.isEnabled=true
-        companiesData.pickerDelegate=self
-        companiesData.dataSource=self
+        companyBtn.isEnabled=true
+//        companiesData.pickerDelegate=self
+//        companiesData.dataSource=self
     }
     
     func getJobData(data: JobData) {
         jobs=data.jobs
-        jobData.pickerDelegate=self
-        jobData.dataSource=self
+     
+//        jobData.pickerDelegate=self
+//        jobData.dataSource=self
 
         
     }
     
     func getFormsData(data: FormsData) {
         forms=data.forms
-        formTypeData.pickerDelegate=self
-        formTypeData.dataSource=self
+        formTypeBtn.isEnabled=true
+
+//        formTypeData.pickerDelegate=self
+//        formTypeData.dataSource=self
         
     }
     
     func getDivition(data: DiviosnData) {
         division=data.divisions
-        diviosnLeaderData.pickerDelegate=self
-        diviosnLeaderData.dataSource=self
+        divisionBtn.isEnabled=true
+
+//        diviosnLeaderData.pickerDelegate=self
+//        diviosnLeaderData.dataSource=self
         
     }
     

@@ -15,16 +15,30 @@ class PickerVC: UIViewController {
     @IBOutlet weak var picker: UIPickerView!
 
     @IBOutlet weak var searchBar: SearchView!
-    var arr_data:[String] = []
+    
+    var arr_data:[DataDetails] = []
     var name:String = ""
     var index : Int = 0
+    var companyId=0
     var delegate : ((_ name: String ,_ index:Int) -> Void)?
+    var searchBarHiddenStatus:Bool=false
+    let presenter = AppPresenter()
+
     //pickerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configGUI()
-        setupSearchProperties()
+        searchBar.isHidden = searchBarHiddenStatus
+        searchBarStatus()
+        
+    }
+    
+    func searchBarStatus(){
+        if searchBarHiddenStatus == false{
+            setupSearchProperties()
+        }
+       
     }
     
     func  setupSearchProperties(){
@@ -40,12 +54,16 @@ class PickerVC: UIViewController {
      }
      
      @objc func searchActioon(_ sender : UIButton ) {
-         print(arr_data.contains(searchBar.text ?? ""))
-       
-             arr_data=[]
-             arr_data.append("testttt")
-             picker.delegate=self
-             picker.dataSource=self
+//         print(arr_data.contains(searchBar.text ?? ""))
+//
+//             arr_data=[]
+//             arr_data.append("testttt")
+         
+         if searchBar.text != "" {
+             presenter.getJobs(companyID: "\(companyId)", search: searchBar.text!)
+             presenter.delegate=self
+         }
+         
       
  }
     
@@ -59,10 +77,10 @@ class PickerVC: UIViewController {
         
         
         if arr_data.count > 0 {
-            self.name = arr_data[0]
+            self.name = arr_data[0].title ?? ""
             self.index = 0
         }else{
-            self.arr_data.append("No items found")
+//            self.arr_data.append("No items found")
         }
         
     }
@@ -71,7 +89,9 @@ class PickerVC: UIViewController {
     //------------------------------------------------------
     
     @IBAction func btnSubmit_Click(_ sender: UIButton) {
-        if arr_data.contains("No items found") && arr_data.count == 1 {
+//        if arr_data.contains("No items found") && arr_data.count == 1 {
+
+        if  arr_data.count == 0 {
             self.dismiss(animated: true, completion: nil)
         }else{
             delegate!(name, index)
@@ -101,13 +121,13 @@ extension PickerVC : UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
       
-        return arr_data[row]
+        return arr_data[row].title
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var attributedString: NSAttributedString!
         
-        let item = arr_data[row]
+        let item = arr_data[row].title ?? ""
         attributedString = NSAttributedString(string: item, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         
         
@@ -123,7 +143,7 @@ extension PickerVC : UIPickerViewDelegate, UIPickerViewDataSource {
 
             pickerLabel?.textAlignment = .center
         }
-        pickerLabel?.text = arr_data[row]
+        pickerLabel?.text = arr_data[row].title
         
 
         return pickerLabel!
@@ -136,17 +156,41 @@ extension PickerVC : UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
-        if pickerView.tag == 0 {
-
-            print(arr_data[row])
-            self.name = (arr_data[row])
-            self.index = row
-            
-           
+        if arr_data.count != 0 {
+            if pickerView.tag == 0 {
+                
+                print(arr_data[row])
+                self.name = (arr_data[row].title ?? "")
+                self.index = arr_data[row].id ?? 0
+                
+            }
             
         }
 
    }
 }
+extension PickerVC:FormDelegate{
+    func showAlerts(title: String, message: String) {}
+    
+    func getUserData(user: User) {}
+    
+    func getCompanyData(data: CompaniesData) {}
+    
+    func getJobData(data: JobData) {
+        arr_data = data.jobs
+        picker.delegate=self
+        picker.dataSource=self
+    }
+    
+    func getFormsData(data: FormsData) { }
+    
+    func getDivition(data: DiviosnData) {}
+    
+    func getFormItemsData(data: FormItemData) { }
+    
+    
+}
+extension PickerVC:Storyboarded{
+    static var storyboardName: StoryboardName = .main
 
+}

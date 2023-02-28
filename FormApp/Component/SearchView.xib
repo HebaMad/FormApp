@@ -26,16 +26,8 @@
                         <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbE-kb-uZU">
                             <rect key="frame" x="0.0" y="0.0" width="442" height="63"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-3O-NHX">
-                                    <rect key="frame" x="4" y="4" width="25" height="55"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="25" id="rqI-2h-hls"/>
-                                    </constraints>
-                                    <color key="tintColor" systemColor="systemOrangeColor"/>
-                                    <state key="normal" image="magnifyingglass" catalog="system"/>
-                                </button>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     What are you looking for?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ctf-1P-FCj" customClass="BottomBorderTextField" customModule="FormApp" customModuleProvider="target">
-                                    <rect key="frame" x="29" y="4" width="409" height="55"/>
+                                    <rect key="frame" x="4" y="4" width="409" height="55"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -48,6 +40,14 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-3O-NHX">
+                                    <rect key="frame" x="413" y="4" width="25" height="55"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="25" id="rqI-2h-hls"/>
+                                    </constraints>
+                                    <color key="tintColor" systemColor="systemOrangeColor"/>
+                                    <state key="normal" image="magnifyingglass" catalog="system"/>
+                                </button>
                             </subviews>
                             <directionalEdgeInsets key="directionalLayoutMargins" top="4" leading="4" bottom="4" trailing="4"/>
                         </stackView>
