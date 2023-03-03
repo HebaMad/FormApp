@@ -236,7 +236,7 @@ extension QCFormVC{
         
     }
     
-    @objc func checkStatusForm(_ sender:UITextField){
+    @objc func checkStatusForm(_ sender:UITextFieldDataPicker){
 ////        if requestSubmitted == false{
             let indexPath = NSIndexPath(row: sender.tag, section: 0)
             let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
@@ -339,9 +339,9 @@ extension QCFormVC:UITableViewDelegate, UITableViewDataSource{
 //            cell.addBtn.alpha = 1
         }
         
-        
-        cell.formTypeStatus.addTarget(self, action: #selector(checkStatusForm), for: .touchUpInside)
         cell.formTypeStatus.tag=indexPath.row
+        cell.formTypeStatus.addTarget(self, action: #selector(checkStatusForm), for: .editingDidEnd)
+
 
         cell.formTitleNote.addTarget(self, action: #selector(AddFormData), for: .editingDidEnd)
         cell.formTitleNote.tag=indexPath.row
@@ -438,5 +438,25 @@ extension QCFormVC{
         
         return formData
     }
+    
+}
+
+
+extension QCFormVC:UITextFieldDataPickerDelegate,UITextFieldDelegate{
+    func textFieldDataPicker(_ textField: UITextFieldDataPicker, didSelectRow row: Int, inComponent component: Int) {
+        let indexPath = NSIndexPath(row: row, section: 0)
+        let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
+
+
+            ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
+            ItemNotes.append(cell.formTitleNote.text ?? "")
+            Itemstatus.append(cell.formTypeStatus.text ?? "")
+            itemStatus[row] = cell.formTypeStatus.text ?? ""
+            itemNote[row] = cell.formTitleNote.text ?? ""
+
+    }
+    
+
+    
     
 }
