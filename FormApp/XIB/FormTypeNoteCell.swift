@@ -9,7 +9,6 @@ import UIKit
 
 class FormTypeNoteCell: UITableViewCell,NibLoadableView {
     
-    @IBOutlet weak var addBtn: UIButtonDesignable!
     @IBOutlet weak var FormTypeSubtitle: UILabel!
     
     @IBOutlet weak var formTypeStatus: UITextFieldDataPicker!

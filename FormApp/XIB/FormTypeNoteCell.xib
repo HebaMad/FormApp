@@ -21,65 +21,61 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IIa-rZ-GCI">
                         <rect key="frame" x="16" y="8" width="352" height="123"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="14b-d0-cNU">
+                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="14b-d0-cNU">
                                 <rect key="frame" x="0.0" y="0.0" width="352" height="123"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="rKP-jS-f4I">
-                                        <rect key="frame" x="4" y="0.0" width="344" height="30"/>
+                                        <rect key="frame" x="4" y="0.0" width="344" height="29"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="RBt-tF-Eqc"/>
+                                            <constraint firstAttribute="height" constant="29" id="RBt-tF-Eqc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9z-AS-O9Q">
+                                        <rect key="frame" x="4" y="37" width="344" height="38"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T6d-LK-ZGn">
+                                                <rect key="frame" x="0.0" y="0.0" width="344" height="38"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select your status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElN-1l-FTd">
+                                                        <rect key="frame" x="0.0" y="0.0" width="204" height="38"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="pass" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2L0-7v-gOh" customClass="UITextFieldDataPicker" customModule="FormApp" customModuleProvider="target">
+                                                        <rect key="frame" x="204" y="0.0" width="140" height="38"/>
+                                                        <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="140" id="JMo-ng-3dy"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="T6d-LK-ZGn" firstAttribute="top" secondItem="E9z-AS-O9Q" secondAttribute="top" id="Sr3-Eo-Wxr"/>
+                                            <constraint firstItem="T6d-LK-ZGn" firstAttribute="leading" secondItem="E9z-AS-O9Q" secondAttribute="leading" id="aqB-3g-mcv"/>
+                                            <constraint firstAttribute="height" constant="38" id="hPE-op-gyT"/>
+                                            <constraint firstAttribute="bottom" secondItem="T6d-LK-ZGn" secondAttribute="bottom" id="jKl-BP-C4C"/>
+                                            <constraint firstAttribute="trailing" secondItem="T6d-LK-ZGn" secondAttribute="trailing" id="nco-WI-50J"/>
+                                        </constraints>
+                                    </view>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ADD NOTE" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RW5-ye-Ycl">
-                                        <rect key="frame" x="4" y="35" width="344" height="43"/>
+                                        <rect key="frame" x="4" y="83" width="344" height="38"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="140" translatesAutoresizingMaskIntoConstraints="NO" id="x3Q-y9-PW1">
-                                        <rect key="frame" x="4" y="83" width="344" height="38"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="pass" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2L0-7v-gOh" customClass="UITextFieldDataPicker" customModule="FormApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="102" height="38"/>
-                                                <color key="tintColor" systemColor="systemGreenColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0L-iN-urC" customClass="UIButtonDesignable" customModule="FormApp" customModuleProvider="target">
-                                                <rect key="frame" x="242" y="0.0" width="102" height="38"/>
-                                                <color key="backgroundColor" systemColor="systemGreenColor"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Add">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
-                                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
-                                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
-                                                        <color key="value" systemColor="systemGreenColor"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="38" id="Lcp-Zx-oaS"/>
-                                        </constraints>
-                                    </stackView>
                                 </subviews>
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="4" bottom="2" trailing="4"/>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="14b-d0-cNU" firstAttribute="top" secondItem="IIa-rZ-GCI" secondAttribute="top" id="7r2-Ci-fUh"/>
                             <constraint firstAttribute="bottom" secondItem="14b-d0-cNU" secondAttribute="bottom" id="Eq3-Cm-hU0"/>
@@ -100,7 +96,6 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="FormTypeSubtitle" destination="rKP-jS-f4I" id="2YF-MA-nbU"/>
-                <outlet property="addBtn" destination="t0L-iN-urC" id="Hvu-AA-dZQ"/>
                 <outlet property="formTitleNote" destination="RW5-ye-Ycl" id="5jA-H8-9PC"/>
                 <outlet property="formTypeStatus" destination="2L0-7v-gOh" id="PHk-Dg-xQd"/>
             </connections>
@@ -109,18 +104,12 @@
     </objects>
     <designables>
         <designable name="2L0-7v-gOh">
-            <size key="intrinsicContentSize" width="58.333333333333336" height="34"/>
-        </designable>
-        <designable name="t0L-iN-urC">
-            <size key="intrinsicContentSize" width="30" height="30"/>
+            <size key="intrinsicContentSize" width="102.33333333333333" height="34"/>
         </designable>
     </designables>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

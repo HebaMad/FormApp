@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class QCFormVC: UIViewController {
     //MARK: - Outlet
@@ -13,10 +14,7 @@ class QCFormVC: UIViewController {
     @IBOutlet weak var formTypeNoteTableview: UITableView!
     
     @IBOutlet weak var jobView: UIViewDesignable!
-    //    @IBOutlet weak var diviosnLeaderData: UITextFieldDataPicker!
-//    @IBOutlet weak var formTypeData: UITextFieldDataPicker!
-//    @IBOutlet weak var jobData: UITextFieldDataPicker!
-//    @IBOutlet weak var companiesData: UITextFieldDataPicker!
+
     @IBOutlet weak var companyBtn: UIButton!
     
     @IBOutlet weak var formTypeBtn: UIButton!
@@ -27,7 +25,7 @@ class QCFormVC: UIViewController {
     @IBOutlet weak var formTypeData: UITextField!
     @IBOutlet weak var jobData: UITextField!
     @IBOutlet weak var companiesData: UITextField!
-
+    
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var submitBtn: UIButton!
     
@@ -54,23 +52,24 @@ class QCFormVC: UIViewController {
     var itemStatus:[Int:String] = [:]
     
     var formData:[String : Any] = [:]
-    
+    var requestSubmitted:Bool = false
     //MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         BindButtons()
         BtnStatus()
-        
+        SVProgressHUD.setBackgroundColor(.white)
+        SVProgressHUD.show(withStatus: "please wait")
         presenter.getCompanies()
         presenter.delegate=self
-
+        
         presenter.getDivision()
         presenter.delegate=self
-
+        
         presenter.getForms()
         presenter.delegate=self
-
+        
         setupTableview()
     }
     
@@ -86,7 +85,7 @@ class QCFormVC: UIViewController {
         jobData.isEnabled=false
         companiesData.isEnabled=false
         formTypeData.isEnabled=false
-
+        
     }
     
     func setupTableview(){
@@ -94,18 +93,18 @@ class QCFormVC: UIViewController {
         formTypeNoteTableview.delegate=self
         formTypeNoteTableview.dataSource = self
         
-//        diviosnLeaderData.pickerDelegate=self
-//        diviosnLeaderData.dataSource=self
-//
-//        formTypeData.pickerDelegate=self
-//        formTypeData.dataSource=self
-//
-//        diviosnLeaderData.pickerDelegate=self
-//        diviosnLeaderData.dataSource=self
-//
-//        jobData.pickerDelegate=self
-//        jobData.dataSource=self
-   
+        //        diviosnLeaderData.pickerDelegate=self
+        //        diviosnLeaderData.dataSource=self
+        //
+        //        formTypeData.pickerDelegate=self
+        //        formTypeData.dataSource=self
+        //
+        //        diviosnLeaderData.pickerDelegate=self
+        //        diviosnLeaderData.dataSource=self
+        //
+        //        jobData.pickerDelegate=self
+        //        jobData.dataSource=self
+        
     }
     
     
@@ -113,19 +112,19 @@ class QCFormVC: UIViewController {
         let vc = PickerVC.instantiate()
         vc.arr_data = companies
         vc.searchBarHiddenStatus = true
-
+        
         vc.isModalInPresentation = true
         vc.modalPresentationStyle = .overFullScreen
         vc.definesPresentationContext = true
         vc.delegate = {name , index in
-                // Selection Action Here
+            // Selection Action Here
             print("Selected Value:",name)
             print("Selected Index:",index)
             self.companiesData.text = name
             self.companyID = index
-      
-            self.jobBtn.isEnabled=true
-            self.jobView.backgroundColor = .white
+            
+            //            self.jobBtn.isEnabled=true
+            self.jobView.backgroundColor = .black
             
             self.jobs = []
             self.jobData.text=""
@@ -144,13 +143,13 @@ class QCFormVC: UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         vc.definesPresentationContext = true
         vc.delegate = {name , index in
-                // Selection Action Here
+            // Selection Action Here
             print("Selected Value:",name)
             print("Selected Index:",index)
             self.jobData.text = name
             self.jobID = index
-      
-     
+            
+            
         }
         self.present(vc, animated: true, completion: nil)
     }
@@ -163,13 +162,13 @@ class QCFormVC: UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         vc.definesPresentationContext = true
         vc.delegate = {name , index in
-                // Selection Action Here
+            // Selection Action Here
             print("Selected Value:",name)
             print("Selected Index:",index)
             self.diviosnLeaderData.text = name
             self.divisionID = index
-      
-     
+            
+            
         }
         self.present(vc, animated: true, completion: nil)
     }
@@ -182,17 +181,17 @@ class QCFormVC: UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         vc.definesPresentationContext = true
         vc.delegate = {name , index in
-                // Selection Action Here
+            // Selection Action Here
             print("Selected Value:",name)
             print("Selected Index:",index)
             self.formTypeData.text = name
             self.formTypeID = index
             self.presenter.getFormItem(formTypeID:"\(self.formTypeID)" )
             self.presenter.delegate=self
-     
+            
         }
         self.present(vc, animated: true, completion: nil)
-     
+        
     }
     
     
@@ -206,24 +205,54 @@ extension QCFormVC{
         backBtn.addTarget(self, action: #selector(ButtonWasTapped), for: .touchUpInside)
     }
     
-    @objc func AddFormData( _ sender:UIButton){
-        print(sender.tag)
-        let indexPath = NSIndexPath(row: sender.tag, section: 0)
-        let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
-        if cell.formTitleNote.text != "" || cell.formTypeStatus.text != ""{
-        ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
-        ItemNotes.append(cell.formTitleNote.text ?? "")
-        Itemstatus.append(cell.formTypeStatus.text ?? "")
-        itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
-        itemNote[sender.tag] = cell.formTitleNote.text ?? ""
-        
+    @objc func AddFormData( _ sender:UITextField){
+            
+            
+            let indexPath = NSIndexPath(row: sender.tag, section: 0)
+            let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
+            if cell.formTitleNote.text != "" {
+                
+//                if itemNote.keys.contains(sender.tag) {
+//                    itemNote[sender.tag] = cell.formTitleNote.text ?? ""
+//                    let indx = itemNote.keys.firstIndex(of:sender.tag)
+//
+//                    ItemNotes.remove(at: indx)
+//                    ItemNotes.insert(cell.formTitleNote.text ?? "", at: indx)
+//
+//
+//                }else{
+                    ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
+                    ItemNotes.append(cell.formTitleNote.text ?? "")
+                    Itemstatus.append(cell.formTypeStatus.text ?? "")
+                    itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
+                    itemNote[sender.tag] = cell.formTitleNote.text ?? ""
+//                }
+                
        
-            cell.addBtn.isEnabled = false
-            cell.addBtn.alpha = 0.5
-            cell.addBtn.setTitle("Added", for: .normal)
+                
+//                requestSubmitted=true
+            
         }
-     
         
+    }
+    
+    @objc func checkStatusForm(_ sender:UITextField){
+////        if requestSubmitted == false{
+//            let indexPath = NSIndexPath(row: sender.tag, section: 0)
+//            let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
+//
+//
+//                ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
+//                ItemNotes.append(cell.formTitleNote.text ?? "")
+//                Itemstatus.append(cell.formTypeStatus.text ?? "")
+//                itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
+//                itemNote[sender.tag] = cell.formTitleNote.text ?? ""
+//
+////                requestSubmitted=true
+//
+//
+////        }
+//
     }
 }
 
@@ -239,16 +268,25 @@ extension QCFormVC{
                 let formType = try formTypeData.validatedText(validationType: .requiredField(field: "Select form type please"))
                 let job = try jobData.validatedText(validationType: .requiredField(field: "Select job please"))
                 let companies = try companiesData.validatedText(validationType: .requiredField(field: "Select company please"))
-           
+                
                 Alert.showAlert(viewController: self, title: "Do you  want to send the form", message: "") { Value in
+                   
                     if Value == true{
-                        self.ItemNotes.count != 0 ? self.submitForm(formsDetails: self.FormDetailsParameter(itemNotes: self.ItemNotes, itemIDs: self.ItemID, itemStatus: self.Itemstatus)) : Alert.showErrorAlert(message:  "Add your form Item Data" )
+                        if self.ItemNotes.count != 0{
+                            SVProgressHUD.setBackgroundColor(.white)
+                            SVProgressHUD.show(withStatus: "please wait")
+                            self.submitForm(formsDetails: self.FormDetailsParameter(itemNotes: self.ItemNotes, itemIDs: self.ItemID, itemStatus: self.Itemstatus))
+                        }else{
+                            Alert.showErrorAlert(message:  "Add your form Item Data" )
+                        }
+                         
                     }
                     
-                   
+                    
+                    
                     
                 }
-              
+                
                 
             }catch{
                 Alert.showErrorAlert(message: (error as! ValidationError).message)
@@ -288,23 +326,26 @@ extension QCFormVC:UITableViewDelegate, UITableViewDataSource{
         if itemStatus.keys.contains(indexPath.row){
             cell.formTitleNote.text = itemNote[indexPath.row]
             cell.formTypeStatus.text = itemStatus[indexPath.row]
-            cell.addBtn.setTitle("Added", for: .normal)
-            cell.addBtn.isEnabled = false
-
-            cell.addBtn.alpha = 0.5
+//            cell.addBtn.setTitle("Added", for: .normal)
+//            cell.addBtn.isEnabled = false
+            
+//            cell.addBtn.alpha = 0.5
         }else{
             cell.formTitleNote.text = ""
             cell.formTypeStatus.text = ""
-            cell.addBtn.setTitle("Add", for: .normal)
-            cell.addBtn.isEnabled = true
-
-            cell.addBtn.alpha = 1
+//            cell.addBtn.setTitle("Add", for: .normal)
+//            cell.addBtn.isEnabled = true
+//
+//            cell.addBtn.alpha = 1
         }
         
         
-        
-        cell.addBtn.tag=indexPath.row
-        cell.addBtn.addTarget(self, action: #selector(AddFormData), for: .touchUpInside)
+        cell.formTypeStatus.addTarget(self, action: #selector(checkStatusForm), for: .touchUpInside)
+        cell.formTypeStatus.tag=indexPath.row
+
+        cell.formTitleNote.addTarget(self, action: #selector(AddFormData), for: .editingDidEnd)
+        cell.formTitleNote.tag=indexPath.row
+
         return cell
     }
     
@@ -314,87 +355,11 @@ extension QCFormVC:UITableViewDelegate, UITableViewDataSource{
     
     
 }
-//extension QCFormVC:UITextFieldDataPickerDelegate,UITextFieldDataPickerDataSource{
-//
-//
-//    func textFieldDataPicker(_ textField: UITextFieldDataPicker, numberOfRowsInComponent component: Int) -> Int {
-//        switch textField{
-//        case companiesData:return companies.count
-//        case jobData :return jobs.count
-//        case diviosnLeaderData :return division.count
-//        case formTypeData:return forms.count
-//
-//        default:
-//            return 0
-//        }
-//
-//    }
-//
-//    func textFieldDataPicker(_ textField: UITextFieldDataPicker, titleForRow row: Int, forComponent component: Int) -> String? {
-//
-//        switch textField{
-//        case companiesData:return companies[row].title ?? ""
-//        case jobData :return jobs[row].title ?? ""
-//        case diviosnLeaderData :return division[row].title ?? ""
-//        case formTypeData:return forms[row].title ?? ""
-//
-//        default:
-//            return ""
-//        }
-//    }
-//
-//    func numberOfComponents(in textField: UITextFieldDataPicker) -> Int {
-//        1
-//    }
-//
-//    func textFieldDataPicker(_ textField: UITextFieldDataPicker, didSelectRow row: Int, inComponent component: Int) {
-//        switch textField{
-//        case companiesData:
-//            if companies.count != 0 {
-//                companiesData.setTextFieldTitle(title: companies[row].title ?? "")
-//                companyID = companies[row].id ?? 0
-//                jobData.isEnabled=true
-//                jobs = []
-//                jobData.text=""
-//                presenter.getJobs(companyID: "\(companyID)", search: "")
-//                presenter.delegate=self
-//            }
-//
-//
-//        case jobData :
-//            if jobs.count != 0 {
-//                jobData.setTextFieldTitle(title: jobs[row].title ?? "")
-//                jobID = jobs[row].id ?? 0
-//            }
-//
-//
-//        case diviosnLeaderData :
-//            if division.count != 0 {
-//                diviosnLeaderData.setTextFieldTitle(title: division[row].title ?? "")
-//                divisionID = division[row].id ?? 0
-//            }
-//
-//
-//        case formTypeData:
-//            if forms.count != 0{
-//                formTypeData.setTextFieldTitle(title: forms[row].title ?? "")
-//                formTypeID = forms[row].id ?? 0
-//                presenter.getFormItem(formTypeID:"\(formTypeID)" )
-//                presenter.delegate=self
-//            }
-//
-//
-//        default:
-//            print("")
-//        }
-//    }
-//
-//
-//}
 
 extension QCFormVC:FormDelegate{
     func showAlerts(title: String, message: String) {
         Alert.showSuccessAlert(message: message)
+        SVProgressHUD.dismiss()
         formsItem=[]
         formTypeNoteTableview.reloadData()
         companiesData.text=""
@@ -402,10 +367,10 @@ extension QCFormVC:FormDelegate{
         diviosnLeaderData.text=""
         formTypeData.text=""
         jobBtn.isEnabled=false
-         jobView.backgroundColor = .systemGray5
-
-
-
+        jobView.backgroundColor = .systemGray5
+        
+        
+        
     }
     
     func getUserData(user: User) {}
@@ -413,34 +378,30 @@ extension QCFormVC:FormDelegate{
     func getCompanyData(data: CompaniesData) {
         companies=data.companies
         companyBtn.isEnabled=true
-//        companiesData.pickerDelegate=self
-//        companiesData.dataSource=self
+        SVProgressHUD.dismiss()
     }
     
     func getJobData(data: JobData) {
         jobs=data.jobs
-     
-//        jobData.pickerDelegate=self
-//        jobData.dataSource=self
-
+        jobBtn.isEnabled=true
+        
+        
         
     }
     
     func getFormsData(data: FormsData) {
         forms=data.forms
         formTypeBtn.isEnabled=true
-
-//        formTypeData.pickerDelegate=self
-//        formTypeData.dataSource=self
+        
+        
         
     }
     
     func getDivition(data: DiviosnData) {
         division=data.divisions
         divisionBtn.isEnabled=true
-
-//        diviosnLeaderData.pickerDelegate=self
-//        diviosnLeaderData.dataSource=self
+        
+        
         
     }
     
