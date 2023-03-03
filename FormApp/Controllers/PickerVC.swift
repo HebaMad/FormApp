@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class PickerVC: UIViewController {
 
     @IBOutlet weak var btnNext: UIButton!
@@ -60,6 +60,8 @@ class PickerVC: UIViewController {
 //             arr_data.append("testttt")
          
          if searchBar.text != "" {
+             SVProgressHUD.setBackgroundColor(.white)
+             SVProgressHUD.show(withStatus: "please wait")
              presenter.getJobs(companyID: "\(companyId)", search: searchBar.text!)
              presenter.delegate=self
          }
@@ -178,6 +180,7 @@ extension PickerVC:FormDelegate{
     
     func getJobData(data: JobData) {
         arr_data = data.jobs
+        SVProgressHUD.dismiss()
         picker.delegate=self
         picker.dataSource=self
     }

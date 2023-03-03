@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class SignUpVC: UIViewController {
     
     //MARK: - Outlet
@@ -81,6 +81,8 @@ extension SignUpVC{
             let lname = try lastNameTf.valueTxt.validatedText(validationType: .requiredField(field: "last name requied"))
             let email = try emailTf.valueTxt.validatedText(validationType: .email)
             let pass = try passwordTf.valueTxt.validatedText(validationType: .requiredField(field: "password required"))
+            SVProgressHUD.setBackgroundColor(.white)
+            SVProgressHUD.show(withStatus: "please wait")
             self.presenter.signup(firstName: fname, lastName: lname, email: email, password: pass)
             self.presenter.delegate = self
             
@@ -100,6 +102,7 @@ extension SignUpVC:FormDelegate{
             try KeychainWrapper.set(value: "Bearer"+" "+user.api_token! , key: user.email ?? "")
             AppData.email = user.email ?? ""
             let vc=HomeVC.instantiate()
+            SVProgressHUD.dismiss()
             navigationController?.pushViewController(vc, animated: true)
             
         } catch let error {

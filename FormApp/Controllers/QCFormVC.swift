@@ -238,16 +238,16 @@ extension QCFormVC{
     
     @objc func checkStatusForm(_ sender:UITextField){
 ////        if requestSubmitted == false{
-//            let indexPath = NSIndexPath(row: sender.tag, section: 0)
-//            let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
-//
-//
-//                ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
-//                ItemNotes.append(cell.formTitleNote.text ?? "")
-//                Itemstatus.append(cell.formTypeStatus.text ?? "")
-//                itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
-//                itemNote[sender.tag] = cell.formTitleNote.text ?? ""
-//
+            let indexPath = NSIndexPath(row: sender.tag, section: 0)
+            let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
+
+
+                ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
+                ItemNotes.append(cell.formTitleNote.text ?? "")
+                Itemstatus.append(cell.formTypeStatus.text ?? "")
+                itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
+                itemNote[sender.tag] = cell.formTitleNote.text ?? ""
+
 ////                requestSubmitted=true
 //
 //
