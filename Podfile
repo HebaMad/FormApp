@@ -8,5 +8,5 @@ target 'FormApp' do
   # Pods for FormApp
   pod 'IQKeyboardManagerSwift', '6.3.0'
   pod 'Moya'
-
+  pod 'SVProgressHUD'
 end
