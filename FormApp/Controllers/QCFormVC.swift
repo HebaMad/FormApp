@@ -212,21 +212,22 @@ extension QCFormVC{
             let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
             if cell.formTitleNote.text != "" {
                 
-//                if itemNote.keys.contains(sender.tag) {
-//                    itemNote[sender.tag] = cell.formTitleNote.text ?? ""
-//                    let indx = itemNote.keys.firstIndex(of:sender.tag)
-//
-//                    ItemNotes.remove(at: indx)
-//                    ItemNotes.insert(cell.formTitleNote.text ?? "", at: indx)
-//
-//
-//                }else{
+                if itemNote.keys.contains(sender.tag) {
+                    itemNote[sender.tag] = cell.formTitleNote.text ?? ""
+                    let indx = itemNote.index(forKey: sender.tag)
+                    let intValue = itemNote.distance(from: itemNote.startIndex, to: indx!) // returns an Int value
+
+                    ItemNotes.remove(at: intValue )
+                    ItemNotes.insert(cell.formTitleNote.text ?? "", at: intValue )
+
+
+                }else{
                     ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
                     ItemNotes.append(cell.formTitleNote.text ?? "")
                     Itemstatus.append(cell.formTypeStatus.text ?? "")
                     itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
                     itemNote[sender.tag] = cell.formTitleNote.text ?? ""
-//                }
+                }
                 
        
                 
@@ -237,22 +238,35 @@ extension QCFormVC{
     }
     
     @objc func checkStatusForm(_ sender:UITextFieldDataPicker){
-////        if requestSubmitted == false{
-            let indexPath = NSIndexPath(row: sender.tag, section: 0)
-            let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
 
+         let indexPath = NSIndexPath(row: sender.tag, section: 0)
+        let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
 
+        if cell.formTypeStatus.text != "" {
+            if itemStatus.keys.contains(sender.tag) {
+                itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
+                let indx = itemStatus.index(forKey: sender.tag)
+                let intValue = itemStatus.distance(from: itemStatus.startIndex, to: indx!) // returns an Int value
+                
+                Itemstatus.remove(at: intValue )
+                Itemstatus.insert(cell.formTitleNote.text ?? "", at: intValue )
+                
+                
+            }else{
+                
+                let indexPath = NSIndexPath(row: sender.tag, section: 0)
+                let cell:FormTypeNoteCell = formTypeNoteTableview.cellForRow(at: indexPath as IndexPath) as! FormTypeNoteCell
+                
+                
                 ItemID.append("\(formsItem[indexPath.row].id ?? 0)")
                 ItemNotes.append(cell.formTitleNote.text ?? "")
                 Itemstatus.append(cell.formTypeStatus.text ?? "")
                 itemStatus[sender.tag] = cell.formTypeStatus.text ?? ""
                 itemNote[sender.tag] = cell.formTitleNote.text ?? ""
+                
+            }
+        }
 
-////                requestSubmitted=true
-//
-//
-////        }
-//
     }
 }
 
@@ -392,6 +406,8 @@ extension QCFormVC:FormDelegate{
     func getFormsData(data: FormsData) {
         forms=data.forms
         formTypeBtn.isEnabled=true
+        SVProgressHUD.dismiss()
+
         
         
         
@@ -400,7 +416,8 @@ extension QCFormVC:FormDelegate{
     func getDivition(data: DiviosnData) {
         division=data.divisions
         divisionBtn.isEnabled=true
-        
+        SVProgressHUD.dismiss()
+
         
         
     }

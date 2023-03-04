@@ -95,7 +95,12 @@ extension SignUpVC{
 }
 
 extension SignUpVC:FormDelegate{
-    func showAlerts(title: String, message: String) {}
+    func showAlerts(title: String, message: String) {
+        Alert.showErrorAlert(message:message)
+        SVProgressHUD.dismiss()
+
+        
+    }
     
     func getUserData(user: User) {
         do{
