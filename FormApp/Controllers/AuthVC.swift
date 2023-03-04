@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import LocalAuthentication
 class AuthVC: UIViewController {
     
     //MARK: - Outlet
@@ -21,7 +21,36 @@ class AuthVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AuthorizeFaceID()
         BindButtons()
+    }
+    
+    func AuthorizeFaceID(){
+    let context = LAContext()
+        var error:NSError?=nil
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error){
+            let reason = "please authorize with touch id! "
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {[weak self] success, error in
+                DispatchQueue.main.async {
+                    guard success,error == nil else{
+                        let alert = UIAlertController(title: "Failed to Authenticate ", message: "please try Again", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel,handler:nil))
+                        self?.present(alert, animated: true)
+                        return
+                    }
+                    let nav1 = UINavigationController()
+                    let mainView = HomeVC.instantiate()
+                    nav1.viewControllers = [mainView]
+                    nav1.navigationBar.isHidden = true
+                    self?.sceneDelegate.setRootVC(vc: nav1)
+                }
+               
+            }
+        }else{
+            let alert = UIAlertController(title: "un available ", message: "you can't use this feature", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel,handler:nil))
+            self.present(alert, animated: true)
+        }
     }
     
 
